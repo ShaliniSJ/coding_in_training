@@ -1,26 +1,39 @@
 #include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define all(x) x.begin(), x.end()
 using namespace std;
-void quickSort(vector<int> &arr, int low, int high) {
-    if (low < high) {
-        int pivot = arr[high];
-        int i = low - 1;
-        for (int j = low; j < high; j++) {
-            if (arr[j] < pivot) {
-                i++;
-                swap(arr[i], arr[j]);
+// code by shalini
+int minDistance(string w1, string w2) {
+    int l1 = w1.size(), l2 = w2.size();
+    vector<vector<int>> dp(l1 + 1, vector<int>(l2 + 1, 0));
+    for (int i = 0; i <= l1; ++i) {
+        dp[i][0] = i;
+    }
+    for (int j = 0; j <= l2; ++j) {
+        dp[0][j] = j;
+    }
+    for (int i = 1; i <= l1; ++i) {
+        for (int j = 1; j <= l2; ++j) {
+            if (w1[i - 1] == w2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = 1 + min({
+                                   dp[i - 1][j],    // Deletion
+                                   dp[i][j - 1],    // Insertion
+                                   dp[i - 1][j - 1] // Replacement
+                               });
             }
         }
-        swap(arr[i + 1], arr[high]);
-        quickSort(arr, low, i);
-        quickSort(arr, i + 2, high);
     }
+    return dp[l1][l2];
 }
-
-int main() {
-    vector<int> arr = {10, 7, 8, 9, 1, 5};
-    quickSort(arr, 0, arr.size() - 1);
-    for (int i = 0; i < arr.size(); i++) {
-        cout << arr[i] << " ";
+main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string s1, s2;
+        cin >> s1 >> s2;
+        cout << minDistance(s1, s2) << endl;
     }
-    return 0;
 }

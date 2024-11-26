@@ -1,0 +1,8 @@
+top view of the tree
+[2, 1, 3, 6]
+bottom view of the tree
+[2, 5, 3, 6]
+right view of the tree
+[1, 3, 6]
+Left view of the tree
+[1, 2, 4]
